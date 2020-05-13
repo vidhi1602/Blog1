@@ -13,20 +13,12 @@ if(isset($_POST['save']))
  
 	 	
 
-	 	$sql = "INSERT INTO user (id,firstname,lastname,gender,mobile)
-	 		VALUES (NULL, '$firstname','$lastname','$gender','$mobile')";
-	 	$sql1 = "INSERT INTO login (id,username,password)
-	 		VALUES (NULL, '$username','$password')";
 	 
-	 if (mysqli_query($conn, $sql) && mysqli_query($conn, $sql1)) {
-	 	
-	 
-		header("location:read.php");
-	 }else {
-		echo "Error: " . $sql . "" . mysqli_error($conn);
-	 }
-	 mysqli_close($conn);
-	
+	if (mysqli_query($conn,"INSERT INTO user (firstname,lastname,gender,mobile,username,password) VALUES ('$firstname','$lastname','$gender','$mobile','$username','$password')")) {
+		echo "inserted";
+	}else {
+		echo "not inserted.";
+	}
 	
 
 

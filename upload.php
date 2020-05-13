@@ -1,12 +1,16 @@
 <?php
+session_start();
 include_once 'connection.php';
 
 if (isset($_POST['submit'])) {
  
   $title = $_POST['title'];
   $content = $_POST['content'];
-   $file = $_FILES['file'];
+  $file = $_FILES['file'];
  $category = $_POST['category'];
+  $userid = $_SESSION['id'];
+
+
 
   $fileName = $_FILES['file']['name'];
   $fileTmpName = $_FILES['file']['tmp_name'];
@@ -23,9 +27,9 @@ if (isset($_POST['submit'])) {
     if ($fileError === 0) {
       if ($fileSize < 1000000) {
           $fileDestination = 'upload/'.$fileName;
-          move_uploaded_file($fileTmpName, $fileDestination);
+          copy($fileTmpName, $fileDestination);
 
-          $query = "INSERT INTO images (title,content,file,category) VALUES ('$title','$content','$fileDestination','$category')";
+          $query = "INSERT INTO post (title,content,file,category,user_id) VALUES ('$title','$content','$fileDestination','$category','$userid')";
 
           if (mysqli_query($conn, $query)) {
             header("location:index1.php");
