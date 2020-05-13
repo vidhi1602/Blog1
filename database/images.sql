@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 11, 2020 at 01:22 PM
+-- Generation Time: May 13, 2020 at 09:58 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.4
 
@@ -40,7 +40,9 @@ CREATE TABLE `images` (
 --
 
 INSERT INTO `images` (`id`, `title`, `content`, `file`, `category`) VALUES
-(1, 'BCA', 'hello', 'upload/Manipura_Chakra.jpg', 'Feed');
+(7, 'm-tech', 'hello', 'upload/Anahata_Chakra.jpg', 'Feed'),
+(8, 'mba', 'hello', 'upload/Anahata_Chakra.jpg', 'Feed'),
+(9, 'm-tech', 'hello vidhi ', 'upload/Manipura_Chakra.jpg', 'Feed');
 
 --
 -- Indexes for dumped tables
@@ -60,7 +62,7 @@ ALTER TABLE `images`
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

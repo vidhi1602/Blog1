@@ -3,7 +3,7 @@ include_once 'connection.php';
 
 if (isset($_POST['submit'])) {
  
-  $title = $_POST['title']
+  $title = $_POST['title'];
   $content = $_POST['content'];
    $file = $_FILES['file'];
  $category = $_POST['category'];

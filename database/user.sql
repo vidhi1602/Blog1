@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 11, 2020 at 01:25 PM
+-- Generation Time: May 13, 2020 at 09:58 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.4
 
@@ -32,27 +32,17 @@ CREATE TABLE `user` (
   `firstname` varchar(100) NOT NULL,
   `lastname` varchar(100) NOT NULL,
   `gender` varchar(100) NOT NULL,
-  `mobile` varchar(10) NOT NULL
+  `mobile` varchar(10) NOT NULL,
+  `username` varchar(200) NOT NULL,
+  `password` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `firstname`, `lastname`, `gender`, `mobile`) VALUES
-(1, 'vidhi', 'GAJJAR', 'Female', '9854632145'),
-(2, '', '', '', ''),
-(3, '', '', '', ''),
-(4, 'nilay', 'GAJJAR', 'Male', '8965412365'),
-(5, 'shivangi', 'NAGAR', 'Female', '7896541230'),
-(6, 'nilay', 'GAJJAR', 'Male', '4569874563'),
-(7, 'vidhi', 'GAJJAR', 'Female', '8956412360'),
-(8, '', '', '', ''),
-(9, 'nilay', 'GAJJAR', 'Male', '4589562310'),
-(10, 'shivangi', 'GAJJAR', 'Female', '8456231456'),
-(11, '', '', '', ''),
-(12, '', '', '', ''),
-(13, '', '', '', '');
+INSERT INTO `user` (`id`, `firstname`, `lastname`, `gender`, `mobile`, `username`, `password`) VALUES
+(1, 'nilay', 'GAJJAR', 'Male', '4589652310', 'nilay12', 'nilay1234');
 
 --
 -- Indexes for dumped tables
@@ -72,7 +62,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
