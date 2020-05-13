@@ -1,8 +1,8 @@
 <?php
 include_once 'connection.php';
+session_start();
 $cat = mysqli_query($conn,"SELECT * FROM category");
 $drop=mysqli_query($conn,"SELECT * FROM category");
-
 
 
 
@@ -145,22 +145,35 @@ div.content {
       <input class="form-control mr-sm-2 ml-5" style="width: 300px;" type="search" placeholder="Search Quora">
     	
     	<!-- Button to Open the Modal -->
-  		<button type="button" class="btn-danger" data-toggle="modal" data-target="#myModal" style="border-radius: 13px; border: none;"><i class="fa fa-user-circle fa-2x" aria-hidden="true" style="padding-right:5px;"></i></button>
+  		<button type="button" class="btn-danger" data-toggle="modal" data-target="#myModal" style="border-radius: 13px; border: none;"><i class= "<?php if (!isset($_SESSION['id'])) echo "fa fa-user-circle fa-2x"; ?>"aria-hidden="true" style="padding-right:5px;"></i></button>
     </form>
-
+  </div>
+<form class="form-inline">
  <div style="padding-left: 5px;">
 	   <!-- Button trigger modal -->
-    <button type="button" class="btn btn-danger my-2 my-sm-0" data-toggle="modal" data-target="#exampleModal">
-       Create Blog
-    </button>
+     <button class="btn btn-danger" type="button" data-toggle="modal" data-target=<?php if (!isset($_SESSION['id'])) { echo "#exampleModalCenter1"; } else { echo "#exampleModal"; } ?> >Create Blog</button>
   </div>
+
   <div style="padding-left: 5px;">
+    <?php 
+              if(isset($_SESSION['id'])) { 
+                ?>
+               <a href="login.php?logout" class="btn btn-danger my-2 my-sm-0">Logout</a>
+
+              <?php 
+              } else { 
+              ?>
+              
+              <button class="btn btn-danger my-2 my-sm-0" type="button" data-toggle="modal" data-target="#exampleModalCenter1">Login</button>
+              
+              <?php 
+              } 
+              ?>
    <!-- Button trigger modal -->
-  <button type="button" class="btn btn-danger my-2 my-sm-0" data-toggle="modal" data-target="#exampleModalCenter1">
-     Login
-    </button>
+     
 </div>
-  </div>
+</form>
+ 
 </nav>
 </div>
 
