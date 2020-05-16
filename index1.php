@@ -4,7 +4,16 @@ session_start();
 $cat = mysqli_query($conn,"SELECT * FROM category");
 $drop=mysqli_query($conn,"SELECT * FROM category");
 $drop1=mysqli_query($conn,"SELECT * FROM category");
+$type=$_GET['id'];
 
+if (isset($type)) {
+$inner = mysqli_query($conn,"SELECT post.id,post.title,post.content,post.file,post.category,post.createdat, user.name FROM post
+INNER JOIN user ON post.user_id = user.id  WHERE category = $type");
+
+}else{
+  $inner = mysqli_query($conn,"SELECT post.id,post.title,post.content,post.file,post.category,post.createdat, user.name FROM post
+INNER JOIN user ON post.user_id = user.id");
+}
 
 
 
@@ -210,7 +219,7 @@ div.content {
                   <?php
                        while($row1= mysqli_fetch_array($drop)){
                        ?>
-                  <option value="<?php echo $row1['cat_name'];?>"><?php echo $row1['cat_name'];?></option>
+                  <option value="<?php echo $row1['id'];?>"><?php echo $row1['cat_name'];?></option>
                   <?php
                       }
                   ?>
@@ -276,12 +285,12 @@ div.content {
         <form method="post" action="process.php">
           <div class="wrap-input100 validate-input">
             <span class="label-input100">First Name</span>
-            <input class="input100" type="text" name="firstname"  placeholder="Enter your First Name" required>
+            <input class="input100" type="text" name="firstname" pattern="[A-z]{1,15}" title="please enter character in uppercase" style="text-transform: capitalize;"  placeholder="Enter your First Name" required>
             
           </div><br>
           <div class="wrap-input100 validate-input">
             <span class="label-input100">Last Name</span>
-            <input class="input100" type="text" name="lastname" pattern="[A-Z]{1,15}" title="please enter character in uppercase" style="text-transform: capitalize;"  placeholder="Enter your Last Name" required>
+            <input class="input100" type="text" name="lastname" pattern="[A-z]{1,15}" title="please enter character in uppercase" style="text-transform: capitalize;"  placeholder="Enter your Last Name" required>
             
           </div><br>
           <div class="wrap-input100 validate-input">
@@ -324,7 +333,7 @@ div.content {
 
   					 while($row2= mysqli_fetch_array($cat)){
  					 ?>
-				  <a href="<?php echo $row2['href'];?>"><i class="fas <?php echo $row2['class'];?>"></i><?php echo $row2['cat_name'];?></a>
+				  <a href="?id=<?php echo $row2['id']; ?>&cat_name=<?php echo $row2['cat_name'];?>"><i class="fas <?php echo $row2['class'];?>"></i><?php echo $row2['cat_name'];?></a>
 				  <?php
   						}
   					?>
@@ -335,37 +344,24 @@ div.content {
 				<div class="container">
 					<div class="row border pad">
 						<p style="color: gray; ">Answer . Popular</p>
-						<h5><a href="" style="color: black;">Who is Satya Nadella's son and what does he do? </a></h5><br><br>
-        <?php if (!isset($_SESSION['id'])){
-          ?>
-                <div class="row">
-                    <div class="col-sm-2 col-md-2 col-lg-2">
-                     <img src="assets/img/user2.jpeg" width="100%" style="border-radius: 30px;">
-                    </div>
-                    <div class="col-sm-10 col-md-10 col-lg-10">
-                      <h6>Ayandeep Baruah</h6>
-                      <p>Updated feb 26</p>
-                    </div>
-                  </div>
 
-      <?php
-      }else{
-        ?>
-            <div class="row ml-2">
+                    <?php if (isset($_SESSION['id'])){
+          ?>
+                 <div class="row ml-2">
               <form class="text-center" method="post" action="upload.php" enctype="multipart/form-data">
-                <div class="form-group">
-                <input type="text" class="form-control fadeIn second" name="title" placeholder="Enter your Title" required>
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control fadeIn second" name="content" placeholder="Enter Your Content">
-            </div>
+               <div class="form-inline"> 
+                    <input type="text" class="form-control fadeIn second" name="title" placeholder="Enter your Title" required>
+                    <div class="pl-2">
+                    <input type="text" class="form-control fadeIn second" name="content" placeholder="Enter Your Content">
+                    </div>
+                </div><br>
             <div class="form-group">
                 <label for="exampleFormControlSelect1">select categary</label>
                 <select name="category">
                   <?php
                        while($row2= mysqli_fetch_array($drop1)){
                        ?>
-                  <option value="<?php echo $row2['cat_name'];?>"><?php echo $row2['cat_name'];?></option>
+                  <option value="<?php echo $row2['id'];?>"><?php echo $row2['cat_name'];?></option>
                   <?php
                       }
                   ?>
@@ -381,18 +377,36 @@ div.content {
               </div>
             </div><br>
             <div class="text-center">
-                <button type="submit" class="btn btn-primary" name="submit">Create Post</button>
+                <button type="submit" class="btn-d btn-danger" name="submit">Create Post</button>
             </div>
               </form>
             </div>
-    <?php
-      }
+ 
+      <?php
+    }
+      ?>    
+            <?php
+                       while($info = mysqli_fetch_array($inner)){
+                       ?>
+						<h5 class="pt-3"><a href="" style="color: black;"><?php echo $info['title'];?></a></h5><br><br>
+            <div class="row">
+                    <div class="col-sm-2 col-md-2 col-lg-2">
+                     <img src="assets/img/user2.jpeg" width="100%" style="border-radius: 30px;">
+                    </div>
+                    <div class="col-sm-10 col-md-10 col-lg-10">
 
-     ?>
+                      <h6><?php echo $info['name'];?></h6>
+                      <p><?php echo $info['createdat']; ?></p>
+                    </div>
+                  </div>
 						
-						<h7>Nadella remained silent about his children until one day when he opened up in an interview. His oldest child, Zain Nadella, now 23 years old, was born after a complicated pregnancy.<br>As Nadella said, during the 36th week of pregnancy, his wife Anu noticed that the baby's movements had reduced. They immediately rushed to the local hospital where it was found that the baby was suffering from in-utero asphyxiation. Thereby, the doctors acted immediately and Zain was born via an emergency C-section a few hours later, weighing only 1.36 kg.<br>From the time of birth, Zain had cerebral palsy and has probably been confined to a wheelchair.</h7>
-						<img src="assets/img/user-img.jpeg" width="100%">
-						<h7>Satya Nadella also has two daughters. One of them suffers from a learning disability. Due to the absence of schools pertaining to the special needs of the girl, his wife had to shift to Vancouver for about 5 years for their daughter's education.<br>Nadella says that his kids with special needs and the unexpected challenges and joy of raising them has changed how he relates to people and also instilled a sense of empathy in him.<br>Salute to him🙏<br>Note: The answer is intended to shed light into Satya Nadella's life. Everything mentioned are absolutely true facts unknown to many.</h7>
+						<h7 class="pb-3"><?php echo $info['content'];?></h7>
+						<img src="<?php echo $info['file'];?>" width="100%">
+
+            <?php
+              }
+            ?>
+						<h7 class="pt-3">Satya Nadella also has two daughters. One of them suffers from a learning disability. Due to the absence of schools pertaining to the special needs of the girl, his wife had to shift to Vancouver for about 5 years for their daughter's education.<br>Nadella says that his kids with special needs and the unexpected challenges and joy of raising them has changed how he relates to people and also instilled a sense of empathy in him.<br>Salute to him🙏<br>Note: The answer is intended to shed light into Satya Nadella's life. Everything mentioned are absolutely true facts unknown to many.</h7>
 						<p><a href="">685.5k . viewsView . UpvotersView Sharers</a></p>
 					</div>
 				</div>	
